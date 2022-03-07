@@ -1,5 +1,9 @@
 name: tests
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
     branches:
@@ -34,8 +38,6 @@ jobs:
           - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
             makepot: "true"
             name: test with Odoo
-          - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
-            name: test with OCB
     services:
       postgres:
         image: postgres:13
@@ -51,10 +53,6 @@ jobs:
           persist-credentials: false
       - name: Install addons and dependencies
         run: oca_install_addons
-      - name: Check licenses
-        run: manifestoo -d . check-licenses
-      - name: Check development status
-        run: manifestoo -d . check-dev-status --default-dev-status=Beta
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
