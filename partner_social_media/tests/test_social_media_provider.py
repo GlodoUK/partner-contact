@@ -9,14 +9,50 @@ class TestSocialMediaProvider(TransactionCase):
         ].create(
             {
                 "name": "Test Social Media Provider",
-                "url_format": "https://www.example.com/%s",
+                "url_format": "https://www.example.com/{account}",
                 "font_awesome": "fa-test",
+                "extract_regex": (
+                    r"(https?://)?(www\.)?example.com/(?P<account>[a-zA-Z0-9_\-]+)"
+                ),
             }
         )
         self.partner = self.env["res.partner"].create(
             {
                 "name": "Test Partner",
             }
+        )
+
+    def test_extract_from_url(self):
+        (provider_id, account) = self.env[
+            "res.partner.social.media.provider"
+        ]._extract_provider_and_account_from_url("https://www.example.com/test123")
+
+        self.assertEqual(
+            account,
+            "test123",
+        )
+
+        self.assertEqual(
+            provider_id,
+            self.social_media_provider,
+        )
+
+    def test_auto_extract_from_url(self):
+        social_media_id = self.env["res.partner.social.media"].create(
+            {
+                "partner_id": self.partner.id,
+                "website": "https://www.example.com/test123",
+            }
+        )
+
+        self.assertEqual(
+            social_media_id.account,
+            "test123",
+        )
+
+        self.assertEqual(
+            social_media_id.provider_id,
+            self.social_media_provider,
         )
 
     def test_social_media_provider_url(self):
