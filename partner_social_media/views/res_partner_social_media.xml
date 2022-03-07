@@ -1,0 +1,55 @@
+<odoo>
+    <record id="view_social_form" model="ir.ui.view">
+        <field name="name">view_social_form</field>
+        <field name="model">res.partner.social.media</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="provider_id" />
+                        <field name="account" />
+                        <field
+                            name="website"
+                            widget="url"
+                            attrs="{'invisible': ['|', ('account', '=', False), ('provider_id', '=', False)]}"
+                        />
+                        <field
+                            name="link"
+                            attrs="{'invisible': ['|', ('account', '=', False), ('provider_id', '=', False)]}"
+                        />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_provider_form" model="ir.ui.view">
+        <field name="name">view_provider_form</field>
+        <field name="model">res.partner.social.media.provider</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="image_1920" widget="image" />
+                        <field name="url_format" />
+                        <field name="website" />
+                        <field name="font_awesome" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_provider_tree" model="ir.ui.view">
+        <field name="name">view_provider_tree</field>
+        <field name="model">res.partner.social.media.provider</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="image_128" widget="image" />
+                <field name="url_format" />
+                <field name="website" />
+                <field name="font_awesome" />
+            </tree>
+        </field>
+    </record>
+</odoo>
