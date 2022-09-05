@@ -1,8 +1,8 @@
 {
     "name": "partner_social_media",
     "summary": "Adds social media information on partner",
-    "author": "Glodo",
-    "website": "https://github.com/OCA/partner-contact",
+    "author": "Glo Networks",
+    "website": "https://github.com/GlodoUK/partner-contact",
     "category": "Extra Tools",
     "version": "14.0.1.0.0",
     "depends": ["base_setup"],
